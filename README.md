@@ -101,12 +101,16 @@ DL_Waste_Classification/
 ├── train.py
 ├── check_dataset.py
 │
-├── templates/
+├── templates/index.html
 │
 ├── static/
+    └──  style.css
+    └──  script.js
 │
 ├── models/
-│   └── (Trained model files)
+    └── mobilenetv2.keras
+    └── customCNN.keras
+    └── class_names.json
 │
 ├── dataset/
 │   └── (TrashNet dataset)
