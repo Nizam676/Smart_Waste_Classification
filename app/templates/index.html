@@ -1,0 +1,217 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoSort | Smart Waste Classification</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header class="navbar">
+        <a href="/" class="brand">
+            <span class="brand-icon">♻</span>
+            <span>Eco<span class="brand-highlight">Sort</span></span>
+        </a>
+        <nav>
+            <a href="#how-it-works">How it works</a>
+            <a href="#classifier">Classify waste</a>
+            <a href="#about">About</a>
+        </nav>
+        <a href="#classifier" class="nav-button">Try it now <span>↗</span></a>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <div class="eyebrow"><span class="eyebrow-dot"></span> AI-POWERED WASTE CLASSIFICATION</div>
+                <h1>Make every piece of waste <span>count.</span></h1>
+                <p class="hero-description">
+                    Upload an image and let our deep learning model identify the waste category.
+                    Get simple recycling guidance and make a greener choice.
+                </p>
+                <div class="hero-actions">
+                    <a href="#classifier" class="primary-button">Classify your waste <span>→</span></a>
+                    <a href="#how-it-works" class="text-button">Learn how it works</a>
+                </div>
+                <div class="hero-note">
+                    <span>✓</span> Six waste categories
+                    <span>✓</span> AI-based prediction
+                    <span>✓</span> Recycling guidance
+                </div>
+            </div>
+
+            <div class="hero-visual">
+                <div class="visual-circle circle-one"></div>
+                <div class="visual-circle circle-two"></div>
+                <div class="visual-card">
+                    <div class="visual-top">
+                        <span class="visual-label">SMART SORTING</span>
+                        <span class="live-dot"></span>
+                    </div>
+                    <div class="recycle-illustration">♻</div>
+                    <div class="visual-bottom">
+                        <div>
+                            <strong>Small actions.</strong>
+                            <p>A cleaner tomorrow.</p>
+                        </div>
+                        <span class="visual-leaf">✦</span>
+                    </div>
+                </div>
+                <div class="floating-tag tag-top">🌱 Think green</div>
+                <div class="floating-tag tag-bottom">AI + Sustainability</div>
+            </div>
+        </section>
+
+        <section class="classifier-section" id="classifier">
+            <div class="section-heading">
+                <div class="eyebrow">TRY THE CLASSIFIER</div>
+                <h2>What type of waste is it?</h2>
+                <p>Upload a clear image of a waste item to identify its category.</p>
+            </div>
+
+            <div class="classifier-grid">
+                <div class="upload-card">
+                    <div class="card-heading">
+                        <div>
+                            <span class="step-label">STEP 01</span>
+                            <h3>Upload an image</h3>
+                        </div>
+                        <span class="heading-icon">↑</span>
+                    </div>
+
+                    <div class="upload-area" id="uploadArea">
+                        <input type="file" id="imageInput" accept="image/jpeg,image/png,image/webp" hidden>
+                        <div class="upload-content" id="uploadContent">
+                            <div class="upload-icon">↑</div>
+                            <h4>Drop your image here</h4>
+                            <p>or <button type="button" class="browse-button" id="browseButton">browse files</button></p>
+                            <span class="file-info">JPG, PNG or WEBP · Maximum 5 MB</span>
+                        </div>
+                        <div class="preview-container" id="previewContainer" hidden>
+                            <img id="imagePreview" src="" alt="Selected waste image preview">
+                            <button type="button" class="remove-image" id="removeImage" aria-label="Remove image">×</button>
+                            <span class="preview-caption" id="previewName"></span>
+                        </div>
+                    </div>
+
+                    <button type="button" class="classify-button" id="classifyButton" disabled>
+                        <span id="buttonText">Classify waste</span>
+                        <span id="buttonArrow">→</span>
+                    </button>
+                    <p class="upload-message" id="uploadMessage" role="status"></p>
+                </div>
+
+                <div class="result-card" id="resultCard">
+                    <div class="card-heading">
+                        <div>
+                            <span class="step-label">STEP 02</span>
+                            <h3>Classification result</h3>
+                        </div>
+                        <span class="result-status" id="resultStatus">Waiting</span>
+                    </div>
+
+                    <div class="empty-result" id="emptyResult">
+                        <div class="empty-icon">✧</div>
+                        <h4>Your result will appear here</h4>
+                        <p>Upload an image and click classify to see the AI prediction.</p>
+                    </div>
+
+                    <div class="result-content" id="resultContent" hidden>
+                        <div class="prediction-summary">
+                            <span class="result-caption">PREDICTED CATEGORY</span>
+                            <h2 id="predictedCategory">—</h2>
+                            <div class="confidence-line">
+                                <span>Model confidence</span>
+                                <strong id="confidenceValue">0%</strong>
+                            </div>
+                            <div class="confidence-track">
+                                <div class="confidence-fill" id="confidenceFill"></div>
+                            </div>
+                        </div>
+                        <div class="all-predictions">
+                            <h4>Category breakdown</h4>
+                            <div id="predictionBars"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="recommendation-card" id="recommendationCard" hidden>
+                <div class="recommendation-icon">♻</div>
+                <div class="recommendation-body">
+                    <span class="step-label">STEP 03 · RECYCLING GUIDANCE</span>
+                    <h3 id="recommendationTitle">Recycling recommendation</h3>
+                    <p class="bin-label">Suggested disposal: <strong id="recommendationBin">—</strong></p>
+                    <div class="recommendation-columns">
+                        <div>
+                            <h4>What should you do?</h4>
+                            <ul id="recommendationInstructions"></ul>
+                        </div>
+                        <div>
+                            <h4>Why does it matter?</h4>
+                            <ul id="recommendationBenefits"></ul>
+                        </div>
+                    </div>
+                    <p class="recommendation-note">Guidance is general. Follow your local waste collection and recycling rules.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="how-section" id="how-it-works">
+            <div class="section-heading">
+                <div class="eyebrow">SIMPLE PROCESS</div>
+                <h2>How EcoSort works</h2>
+                <p>Three simple steps to make waste sorting easier.</p>
+            </div>
+            <div class="steps-grid">
+                <article class="step-card">
+                    <div class="step-number">01</div>
+                    <div class="step-icon">📷</div>
+                    <h3>Upload an image</h3>
+                    <p>Choose a clear photo of the waste item you want to identify.</p>
+                </article>
+                <article class="step-card">
+                    <div class="step-number">02</div>
+                    <div class="step-icon">🧠</div>
+                    <h3>AI identifies it</h3>
+                    <p>Our trained CNN model predicts which waste category the image belongs to.</p>
+                </article>
+                <article class="step-card">
+                    <div class="step-number">03</div>
+                    <div class="step-icon">🌱</div>
+                    <h3>Get guidance</h3>
+                    <p>See the predicted category and practical recycling recommendations.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="categories-section" id="about">
+            <div class="section-heading">
+                <div class="eyebrow">WHAT WE RECOGNIZE</div>
+                <h2>Six waste categories</h2>
+                <p>The model is trained to classify images into these six categories.</p>
+            </div>
+            <div class="categories-grid">
+                <div class="category-item"><span>📦</span><strong>Cardboard</strong></div>
+                <div class="category-item"><span>🍾</span><strong>Glass</strong></div>
+                <div class="category-item"><span>🥫</span><strong>Metal</strong></div>
+                <div class="category-item"><span>📄</span><strong>Paper</strong></div>
+                <div class="category-item"><span>🧴</span><strong>Plastic</strong></div>
+                <div class="category-item"><span>🗑️</span><strong>Trash</strong></div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <a href="/" class="brand footer-brand">
+            <span class="brand-icon">♻</span>
+            <span>Eco<span class="brand-highlight">Sort</span></span>
+        </a>
+        <p>Smarter waste sorting for a greener tomorrow.</p>
+        <span class="footer-copy">© 2026 EcoSort · AI-powered waste classification</span>
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
