@@ -181,7 +181,6 @@ The trained model files are hosted on Google Drive because of GitHub's individua
 
 [Download MobileNetV2 Model](https://drive.google.com/file/d/1732vdYK0u2WtHZ-VuMxjV__t9_2rzXwc/view?usp=drive_link)
 
-*Note: Replace the placeholder links above with the actual Google Drive sharing links.*
 
 ## Future Enhancements
 
